@@ -29,19 +29,19 @@
         }
         #puzzle-container {
             display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
+            grid-template-columns: repeat(16, 50px);
+            grid-template-rows: repeat(16, 50px);
+            gap: 2px;
             justify-content: center;
             margin: 20px auto;
-            width: 320px;
+            width: 820px; /* Ajuste para que quepan 16x16 */
             position: relative;
         }
         .puzzle-piece {
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             border: 1px solid #fff;
-            background-size: 300px 300px;
+            background-size: 800px 800px; /* Tamaño de la imagen total */
             cursor: grab;
             user-select: none;
             transition: background-color 0.3s ease;
@@ -64,9 +64,9 @@
             color: #f7a8b8;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin: 0;
+            display: flex;
+            justify-content: center;
             text-align: center;
-            position: absolute;
-            z-index: 2;
         }
 
         #completion-message img.bts-logo {
@@ -74,32 +74,18 @@
             height: auto;
         }
 
-        #group1-container {
-            position: relative;
-            display: inline-block;
-            width: 300px;
-            height: 300px;
-        }
-
-        #group1-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
         @media (max-width: 600px) {
             h1 {
                 font-size: 2rem;
             }
             #puzzle-container {
-                width: 270px;
-                grid-template-columns: repeat(3, 80px);
-                grid-template-rows: repeat(3, 80px);
+                width: 650px;
+                grid-template-columns: repeat(16, 40px);
+                grid-template-rows: repeat(16, 40px);
             }
             .puzzle-piece {
-                width: 80px;
-                height: 80px;
+                width: 40px;
+                height: 40px;
             }
             #completion-message p {
                 font-size: 1.2rem;
@@ -119,13 +105,13 @@
                 font-size: 1.5rem;
             }
             #puzzle-container {
-                width: 230px;
-                grid-template-columns: repeat(3, 70px);
-                grid-template-rows: repeat(3, 70px);
+                width: 520px;
+                grid-template-columns: repeat(16, 30px);
+                grid-template-rows: repeat(16, 30px);
             }
             .puzzle-piece {
-                width: 70px;
-                height: 70px;
+                width: 30px;
+                height: 30px;
             }
             #completion-message p {
                 font-size: 1rem;
@@ -167,14 +153,14 @@
             const puzzleContainer = document.getElementById('puzzle-container');
             puzzleContainer.innerHTML = "";
             let positions = [];
-            for (let i = 0; i < 9; i++) positions.push(i);
+            for (let i = 0; i < 256; i++) positions.push(i); // 16x16 = 256 piezas
             positions = positions.sort(() => Math.random() - 0.5);
 
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 256; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('puzzle-piece');
                 piece.style.backgroundImage = `url(${imgSrc})`;
-                piece.style.backgroundPosition = `-${(positions[i] % 3) * 100}px -${Math.floor(positions[i] / 3) * 100}px`;
+                piece.style.backgroundPosition = `-${(positions[i] % 16) * 50}px -${Math.floor(positions[i] / 16) * 50}px`;
                 piece.draggable = true;
                 piece.dataset.index = positions[i];
                 piece.addEventListener('dragstart', dragStart);
