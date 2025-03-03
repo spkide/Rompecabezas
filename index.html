@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas Interactivo - BTS</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background-image: url('16755813d8eaf4fbd09a41bfcf1fdb23.gif');
+            background-attachment: fixed;
+            background-repeat: no-repeat;/* Morado de BTS */
+            background-position-x: center;
+            background-size: auto;
+            width: 100%;
+            height: 100vh;
+            color: white;
+            margin: 0;
+            padding: 0;
+
+        }
+        h1 {
+            font-size: 3rem;
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        #upload-container {
+            margin: 20px;
+        }
+        #puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+            width: 320px;
+            position: relative;
+        }
+        .puzzle-piece {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #fff;
+            background-size: 300px 300px;
+            cursor: grab;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+        .puzzle-piece:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        #completion-message {
+            display: none;
+            margin-top: 20px;
+        }
+        #completion-message img {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+        #completion-message p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f7a8b8; /* Color suave de rosa */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .bts-logo {
+            width: 150px;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rompecabezas De Recuerdos</h1>
+    <div id="upload-container">
+        <input type="file" id="imageUpload" accept="image/*">
+    </div>
+    <div id="puzzle-container"></div>
+    <div id="completion-message">
+        <img src="ec540973afa387a6b7003d24060b4c26.gif" alt="Imagen de Felicidades">
+        <p>¡Te quiero mucho, mucho, mi amor! ❤️</p>
+        <img src="Group 1.png" alt="Gui" class="bts-logo">
+    </div>
+    <script>
+        let imgSrc = "";
+
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imgSrc = e.target.result;
+                    createPuzzle();
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function createPuzzle() {
+            const puzzleContainer = document.getElementById('puzzle-container');
+            puzzleContainer.innerHTML = "";
+            let positions = [];
+            for (let i = 0; i < 9; i++) positions.push(i);
+            positions = positions.sort(() => Math.random() - 0.5);
+
+            for (let i = 0; i < 9; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('puzzle-piece');
+                piece.style.backgroundImage = `url(${imgSrc})`;
+                piece.style.backgroundPosition = `-${(positions[i] % 3) * 100}px -${Math.floor(positions[i] / 3) * 100}px`;
+                piece.draggable = true;
+                piece.dataset.index = positions[i];
+                piece.addEventListener('dragstart', dragStart);
+                piece.addEventListener('dragover', dragOver);
+                piece.addEventListener('drop', drop);
+                puzzleContainer.appendChild(piece);
+            }
+        }
+
+        let draggedPiece = null;
+
+        function dragStart(event) {
+            draggedPiece = event.target;
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            if (event.target.classList.contains('puzzle-piece')) {
+                let tempIndex = draggedPiece.dataset.index;
+                draggedPiece.dataset.index = event.target.dataset.index;
+                event.target.dataset.index = tempIndex;
+
+                let tempPos = draggedPiece.style.backgroundPosition;
+                draggedPiece.style.backgroundPosition = event.target.style.backgroundPosition;
+                event.target.style.backgroundPosition = tempPos;
+                checkCompletion();
+            }
+        }
+
+        function checkCompletion() {
+            let pieces = document.querySelectorAll('.puzzle-piece');
+            let correct = true;
+            pieces.forEach((piece, index) => {
+                if (piece.dataset.index != index) {
+                    correct = false;
+                }
+            });
+            if (correct) {
+                document.getElementById('completion-message').style.display = 'block';
+                alert("¡Felicidades! Has completado el rompecabezas.");
+            }
+        }
+    </script>
+</body>
+</html>
