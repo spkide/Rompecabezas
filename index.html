@@ -29,19 +29,19 @@
         }
         #puzzle-container {
             display: grid;
-            grid-template-columns: repeat(16, 50px);
-            grid-template-rows: repeat(16, 50px);
-            gap: 2px;
+            grid-template-columns: repeat(4, 100px); /* Cambiar a 4 columnas */
+            grid-template-rows: repeat(3, 100px);    /* 3 filas */
+            gap: 5px;
             justify-content: center;
             margin: 20px auto;
-            width: 820px; /* Ajuste para que quepan 16x16 */
+            width: 440px; /* Ajuste del ancho */
             position: relative;
         }
         .puzzle-piece {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
             border: 1px solid #fff;
-            background-size: 800px 800px; /* Tamaño de la imagen total */
+            background-size: 400px 300px; /* Ajuste del tamaño */
             cursor: grab;
             user-select: none;
             transition: background-color 0.3s ease;
@@ -79,13 +79,13 @@
                 font-size: 2rem;
             }
             #puzzle-container {
-                width: 650px;
-                grid-template-columns: repeat(16, 40px);
-                grid-template-rows: repeat(16, 40px);
+                width: 380px;
+                grid-template-columns: repeat(4, 90px); /* Ajuste de tamaño para pantallas pequeñas */
+                grid-template-rows: repeat(3, 90px);
             }
             .puzzle-piece {
-                width: 40px;
-                height: 40px;
+                width: 90px;
+                height: 90px;
             }
             #completion-message p {
                 font-size: 1.2rem;
@@ -105,13 +105,13 @@
                 font-size: 1.5rem;
             }
             #puzzle-container {
-                width: 520px;
-                grid-template-columns: repeat(16, 30px);
-                grid-template-rows: repeat(16, 30px);
+                width: 340px;
+                grid-template-columns: repeat(4, 80px); /* Ajuste más pequeño */
+                grid-template-rows: repeat(3, 80px);
             }
             .puzzle-piece {
-                width: 30px;
-                height: 30px;
+                width: 80px;
+                height: 80px;
             }
             #completion-message p {
                 font-size: 1rem;
@@ -153,14 +153,14 @@
             const puzzleContainer = document.getElementById('puzzle-container');
             puzzleContainer.innerHTML = "";
             let positions = [];
-            for (let i = 0; i < 256; i++) positions.push(i); // 16x16 = 256 piezas
+            for (let i = 0; i < 12; i++) positions.push(i); // Para 12 piezas
             positions = positions.sort(() => Math.random() - 0.5);
 
-            for (let i = 0; i < 256; i++) {
+            for (let i = 0; i < 12; i++) {
                 const piece = document.createElement('div');
                 piece.classList.add('puzzle-piece');
                 piece.style.backgroundImage = `url(${imgSrc})`;
-                piece.style.backgroundPosition = `-${(positions[i] % 16) * 50}px -${Math.floor(positions[i] / 16) * 50}px`;
+                piece.style.backgroundPosition = `-${(positions[i] % 4) * 100}px -${Math.floor(positions[i] / 4) * 100}px`; // Ajuste a 4x3
                 piece.draggable = true;
                 piece.dataset.index = positions[i];
                 piece.addEventListener('dragstart', dragStart);
