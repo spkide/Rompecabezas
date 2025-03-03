@@ -10,7 +10,7 @@
             font-family: 'Arial', sans-serif;
             background-image: url('16755813d8eaf4fbd09a41bfcf1fdb23.gif');
             background-attachment: fixed;
-            background-repeat: no-repeat; /* Morado de BTS */
+            background-repeat: no-repeat;
             background-position-x: center;
             background-size: auto;
             width: 100%;
@@ -49,27 +49,45 @@
         .puzzle-piece:hover {
             background-color: rgba(255, 255, 255, 0.3);
         }
+
         #completion-message {
             display: none;
+            position: relative;
+            justify-content: center;
+            align-items: center;
             margin-top: 20px;
         }
-        #completion-message img {
-            width: 200px;
-            height: auto;
-            border-radius: 10px;
-        }
+
         #completion-message p {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #f7a8b8; /* Color suave de rosa */
+            color: #f7a8b8;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+            text-align: center;
+            position: absolute;
+            z-index: 2;
         }
-        .bts-logo {
+
+        #completion-message img.bts-logo {
             width: 150px;
             height: auto;
-            margin-top: 20px;
         }
-        /* Responsive Design */
+
+        #group1-container {
+            position: relative;
+            display: inline-block;
+            width: 300px;
+            height: 300px;
+        }
+
+        #group1-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 2rem;
@@ -87,7 +105,12 @@
                 font-size: 1.2rem;
             }
             .bts-logo {
-                width: 120px;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                padding: 20px 30px;
+                width: 100px;
+                height: 100vh;
             }
         }
 
@@ -120,10 +143,11 @@
     </div>
     <div id="puzzle-container"></div>
     <div id="completion-message">
+        <div id="group1-container">
+            <p>¡Te quiero mucho, mucho, mi amor! ❤️</p>
+        </div>
         <img src="ec540973afa387a6b7003d24060b4c26.gif" alt="Imagen de Felicidades">
-        <p>¡Te quiero mucho, mucho, mi amor! ❤️</p>
-        <img src="Group 1.png" alt="Gui" class="bts-logo">
-    </div>
+    </div>        
     <script>
         let imgSrc = "";
 
